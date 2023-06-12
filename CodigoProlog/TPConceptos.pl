@@ -27,7 +27,7 @@ herramienta('Mascara respiratoria', 'Juan Perez', '02/05/2023', 1).
 herramienta('Casco de seguridad', 'Ana Silva', '11/02/2023', 1).
 herramienta('Cinturon porta herramientas', 'Pedro Lopez', '26/04/2023', 1).
 herramienta('Taladro inalambrico', 'Carlos Rodriguez', '07/03/2023', 1).
-
+%herramienta('Llaves alem', 'Alan Lopez', '27/03/2023', 1).
 
 ventas(Articulo, Cantidad) :-
     findall(C, herramienta(Articulo, _, _, C), Cantidades),
@@ -38,3 +38,26 @@ articulo_menos_vendido(Articulos) :-
     keysort(Ventas, [MenorCantidad-_|_]),
     findall(Art, (member(Cantidad-Art, Ventas), ventas(Art, MenorCantidad)), ArticulosSinDuplicados),
     sort(ArticulosSinDuplicados, Articulos).
+
+articulo_mas_vendido(Articulo) :-
+    findall(Cantidad-A, (herramienta(A, _, _, _), ventas(A, Cantidad)), Ventas),
+    keysort(Ventas, VentasOrdenadas),
+    reverse(VentasOrdenadas, [MayorCantidad-_|_]),
+    findall(Art, (member(Cantidad-Art, VentasOrdenadas), ventas(Art, MayorCantidad)), ArticulosSinDuplicados),
+    sort(ArticulosSinDuplicados, [Articulo|_]).
+      
+mostrar_ventas :-
+    findall(Cantidad-Articulo, (herramienta(Articulo, _, _, _), ventas(Articulo, Cantidad)), Ventas),
+    write('Articulos y Cantidad de Ventas:'), nl,
+    mostrar_ventas_aux(Ventas).
+
+mostrar_ventas_aux([]).
+mostrar_ventas_aux([Cantidad-Articulo | Resto]) :-
+    write(Articulo), write(': '), write(Cantidad), nl,
+    mostrar_ventas_aux(Resto).
+    
+%se_vendio_mas(Articulo1, Articulo2) :-
+%    ventas(Articulo1, Cantidad1),
+%    ventas(Articulo2, Cantidad2),
+%    Cantidad1 > Cantidad2.
+

@@ -1,3 +1,0 @@
-articulo_menos_vendido(Articulo).
-articulo_mas_vendido(Articulo).
-mostrar_ventas

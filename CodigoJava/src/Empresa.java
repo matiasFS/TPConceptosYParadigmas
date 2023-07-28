@@ -1,19 +1,20 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
 
 public class Empresa {
     private List<Articulo> articulos;
     private List<Cliente> clientes;
     private List<Venta> ventas;
 
-    public  List<Articulo> getListArticulos(){
-       
+    public List<Articulo> getListArticulos() {
+
         return this.articulos;
 
     }
-
 
     public Empresa() {
         this.articulos = new ArrayList<>();
@@ -103,12 +104,29 @@ public class Empresa {
 
     public void mostrarArticulosVendidos() {
         System.out.println("Listado de artículos vendidos:");
+        Set<String> articulosMostrados = new HashSet<>();
+
         for (Venta venta : ventas) {
             Articulo articulo = venta.getArticulo();
-            int cantidad = venta.getCantidad();
-            System.out.println(
-                    "\n *Artículo: " + articulo.getNombre() + " - Tipo: " + articulo.getTipo() + " - Cantidad: "
-                            + cantidad);
+            String nombreArticulo = articulo.getNombre();
+
+            // Verificar si el artículo ya fue mostrado
+            if (!articulosMostrados.contains(nombreArticulo)) {
+                int cantidadTotal = 0;
+                // Sumar la cantidad de veces que se vendió el mismo artículo
+                for (Venta ventaRepetida : ventas) {
+                    if (ventaRepetida.getArticulo().getNombre().equals(nombreArticulo)) {
+                        cantidadTotal += ventaRepetida.getCantidad();
+                    }
+                }
+
+                System.out.println(
+                        "\n *Artículo: " + nombreArticulo + " - Tipo: " + articulo.getTipo() + " - Cantidad vendida: "
+                                + cantidadTotal);
+
+                // Agregar el nombre del artículo al conjunto de artículos mostrados
+                articulosMostrados.add(nombreArticulo);
+            }
         }
     }
 
@@ -135,23 +153,24 @@ public class Empresa {
                 Articulo articulo = venta.getArticulo();
                 LocalDate fecha = venta.getFecha();
                 System.out.println(
-                    "\n*  Fecha: " + fecha +" \n Artículo: " + articulo.getNombre() + " - Tipo: " + articulo.getTipo() );
+                        "\n*  Fecha: " + fecha + " \n Artículo: " + articulo.getNombre() + " - Tipo: "
+                                + articulo.getTipo());
             }
         }
     }
 
     public void listarPorTipo(List<Articulo> ListArticulos, String tipo) {
-        System.out.println("-------Listado de artículos de tipo: "+tipo+"-------");
-       for (Articulo articulo : ListArticulos) {
-        if (articulo.getTipo().equals(tipo)) {
-            int stock = articulo.getStock();
-            System.out.println(
-                    "\n *Artículo:\n " + articulo.getNombre() + " - Cantidad:" + stock);
-                    stock=0;
-        }
+        System.out.println("-------Listado de artículos de tipo: " + tipo + "-------");
+        for (Articulo articulo : ListArticulos) {
+            if (articulo.getTipo().equals(tipo)) {
+                int stock = articulo.getStock();
+                System.out.println(
+                        "\n *Artículo:\n " + articulo.getNombre() + " - Cantidad:" + stock);
+                stock = 0;
+            }
 
-       }
-            System.out.println("\n");
+        }
+        System.out.println("\n");
     }
 
 }

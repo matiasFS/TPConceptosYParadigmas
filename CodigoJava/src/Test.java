@@ -10,8 +10,6 @@ public class Test {
         int idCliente4 = 5;
         int idCliente5 = 6;
 
-
-
         // Agregar artículos
         empresa.agregarArticulo("Herramientas electricas", "Amoladora angular", 90);
         empresa.agregarArticulo("Herramientas electricas", "Taladro inalambrico", 41);
@@ -93,38 +91,29 @@ public class Test {
         // Listado de artículos vendidos con sus cantidades.
         empresa.mostrarArticulosVendidos();
 
-        
         System.out.println("\n \n \n ");
 
         // Ventas realizadas dada una fecha, antes de esa fecha
-    System.out.println("------------Ventas realizadas dada una fecha, antes de la fecha 2023/4/30 ------------ \n");
+        System.out.println("------------Ventas realizadas dada una fecha, antes de la fecha 2023/4/30 ------------ \n");
 
         empresa.mostrarVentasAntesDeFecha(LocalDate.of(2023, 4, 30));
 
-
         System.out.println("\n \n \n ");
 
-    System.out.println("------------Dado un cliente, listar sus compras con su fecha correspondiente ------------ \n");
+        System.out.println(
+                "------------Dado un cliente, listar sus compras con su fecha correspondiente ------------ \n");
 
-        
         // Dado un cliente, listar sus compras con su fecha correspondiente
         empresa.listarComprasPorCliente(cliente6);
 
         System.out.println("\n \n \n ");
 
-    System.out.println("------------Listar por tipo de herramientas ------------ \n");
+        System.out.println("------------Listar por tipo de herramientas ------------ \n");
 
-            empresa.listarPorTipo(empresa.getListArticulos(),"Herramientas manuales");
-            empresa.listarPorTipo(empresa.getListArticulos(),"Herramientas electricas");
-            empresa.listarPorTipo(empresa.getListArticulos(),"Equipos de seguridad y proteccion");
-
-
-
+        empresa.listarPorTipo(empresa.getListArticulos(), "Herramientas manuales");
+        empresa.listarPorTipo(empresa.getListArticulos(), "Herramientas electricas");
+        empresa.listarPorTipo(empresa.getListArticulos(), "Equipos de seguridad y proteccion");
 
     }
-
-
-
-
 
 }
